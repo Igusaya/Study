@@ -16,10 +16,10 @@ class LaunchAPI extends RESTDataSource {
         missionPatchSmall: launch.links.mission_patch_small,
         missionPatchLarge: launch.links.mission_patch,
       },
-      roket: {
-        id: launch.roket.roket_id,
-        name: launch.roket.roket_name,
-        type: launch.roket.roket_type,
+      rocket: {
+        id: launch.rocket.rocket_id,
+        name: launch.rocket.rocket_name,
+        type: launch.rocket.rocket_type,
       },
     };
   }

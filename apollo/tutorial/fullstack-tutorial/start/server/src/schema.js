@@ -2,10 +2,28 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
-    launches: [Launch]!
+    launches(
+      """
+      表示する結果の数。 1以上である必要があります。デフォルト= 20
+      """
+      pageSize: Int
+      """
+      ここにカーソルを追加すると、このカーソルの後にのみ結果が返されます
+      """
+      after: String
+    ): LaunchConnection!
     launch(id: ID!): Launch
-    # Queries for the current user
     me: User
+  }
+
+  """
+  起動リストの最後の項目へのカーソルを含むシンプルなラッパーです。
+  このカーソルを launches クエリに渡して、これらの後の結果を取得します。
+  """
+  type LaunchConnection {
+    cursor: String!
+    hasMore: Boolean!
+    launches: [Launch]!
   }
 
   type Mutation {
@@ -24,11 +42,11 @@ const typeDefs = gql`
     id: ID!
     site: String
     mission: Mission
-    roket: Roket
+    rocket: Rocket
     isBooked: Boolean!
   }
 
-  type Roket {
+  type Rocket {
     id: ID!
     name: String
     type: String
@@ -42,7 +60,7 @@ const typeDefs = gql`
 
   type Mission {
     name: String
-    missionPatch(size: PatchSize): String
+    missionPatch(mission: String, size: PatchSize): String
   }
 
   enum PatchSize {
